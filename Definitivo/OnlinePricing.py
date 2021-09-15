@@ -23,8 +23,12 @@ opt_cr = Cr_a(opt_price)
 # Number of Returns is supposed to be known, as it does not influence the online problem when considering aggregated data;
 # its value is set to the optimal one, but in principle we can estimate it ( see Contextual Online Pricing using Naive Context)
 
-opt_cpc = cpc_a_MC(opt_bid)
-opt_ndc = ndc_a_MC(opt_bid)
+#opt_cpc = cpc_a_MC(opt_bid)
+#opt_ndc = ndc_a_MC(opt_bid)
+opt_cpc_vec = np.load('cpc_agg_opt.npy', allow_pickle=True)
+opt_ndc_vec = np.load('ndc_agg_opt.npy',allow_pickle=True)
+opt_cpc = opt_cpc_vec[bids.index(opt_bid)]
+opt_ndc = opt_ndc_vec[bids.index(opt_bid)]
 opt_R =1 + (1/30)*np.dot(np.array(aggregate['return probs'][0]),np.array(aggregate['return probs'][1]))
 
 # Price candidates

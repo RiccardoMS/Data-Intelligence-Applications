@@ -68,13 +68,13 @@ print(opt_bid, opt_price, opt_value)
 bids = np.array(bids)
 n_arms = len(bids)
 T = 365
-n_experiments = 3
+n_experiments = 100
 
 # daily revenue with fixed price, returns and cr
 daily_rev = lambda ndc, cpc: ndc * opt_cr * Mr(opt_price) * opt_R - ndc * cpc
 
 # Set to True in order to simulate model training
-Training = True
+Training = False
 if Training:
  # data structures
  gts_revenue_per_exp = []
@@ -129,25 +129,25 @@ if Training:
     gpts_revenue_per_exp.append(gpts_learner.collected_revenues)
 
  # Save Results
- #np.save('GTSOnlineBidding_revenue.npy',gts_revenue_per_exp)
- #np.save('GPTSOnlineBidding_revenue.npy',gpts_revenue_per_exp)
- #np.save('GTSOnlineBidding_arms.npy',gts_arms)
- #np.save('GPTSOnlineBidding_arms.npy',gpts_arms)
+ np.save('GTSOnlineBidding_revenue.npy',gts_revenue_per_exp)
+ np.save('GPTSOnlineBidding_revenue.npy',gpts_revenue_per_exp)
+ np.save('GTSOnlineBidding_arms.npy',gts_arms)
+ np.save('GPTSOnlineBidding_arms.npy',gpts_arms)
 
  ## End Simulations
 
 # Load
-#gts_revenue_per_exp = np.load('GTSOnlineBidding_revenue.npy', allow_pickle=True)
-#gpts_revenue_per_exp = np.load('GPTSOnlineBidding_revenue.npy', allow_pickle=True)
-#gts_arms = np.load('GTSOnlineBidding_arms.npy', allow_pickle=True)
-#gpts_arms = np.load('GTSOnlineBidding_arms.npy', allow_pickle=True) # GPTS
+gts_revenue_per_exp = np.load('GTSOnlineBidding_revenue.npy', allow_pickle=True)
+gpts_revenue_per_exp = np.load('GPTSOnlineBidding_revenue.npy', allow_pickle=True)
+gts_arms = np.load('GTSOnlineBidding_arms.npy', allow_pickle=True)
+gpts_arms = np.load('GTSOnlineBidding_arms.npy', allow_pickle=True) # GPTS
 
 # Plots
 plt.figure()
 plt.xlabel("t")
 plt.ylabel("Regret")
 plt.plot(np.cumsum(np.mean(opt_value - np.array(gts_revenue_per_exp),axis=0)), 'r')
-plt.plot(np.cumsum(np.mean(opt_value - np.array(gpts_revenue_per_exp),axis=0)), 'g')
+plt.plot(np.cumsum(np.mean(opt_value  - np.array(gpts_revenue_per_exp),axis=0)), 'g')
 plt.legend(["GTS", "GPTS"])
 plt.show()
 

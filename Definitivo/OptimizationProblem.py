@@ -66,9 +66,11 @@ def Expected_Revenue_Class3(price, bid):
                  1 + (1/30)*np.dot(np.array(C3['return probs'][0]),np.array(C3['return probs'][1]))) \
              - ndc_3(bid) * cpc_3(bid))
 
+ndc_agg_opt = np.load('ndc_agg_opt.npy')
+cpc_agg_opt = np.load('cpc_agg_opt.npy')
 def Expected_Revenue_Aggregated(price, bid):
-   return ndc_a_MC(bid) * Cr_a(price) * Mr(price) * (1 + (1/30)*np.dot(np.array(aggregate['return probs'][0]),np.array(aggregate['return probs'][1]))) \
-          - ndc_a_MC(bid) * cpc_a_MC(bid)
+   return ndc_agg_opt[bids.index(bid)] * Cr_a(price) * Mr(price) * (1 + (1/30)*np.dot(np.array(aggregate['return probs'][0]),np.array(aggregate['return probs'][1]))) \
+          - ndc_agg_opt[bids.index(bid)] * cpc_agg_opt[bids.index(bid)]
 
 
 # Define Brute Force Maximizer
@@ -106,10 +108,13 @@ if __name__ == "__main__":
        from array import *
 
        #   Aggregated
+       def Exp_rev_agg_plot(price, bid):
+          return ndc_a_MC(bid) * Cr_a(price) * Mr(price) * (1 + (1 / 30) * np.dot(np.array(aggregate['return probs'][0]),np.array(aggregate['return probs'][1]))) - ndc_a_MC(bid) * cpc_a_MC(bid)
+
        pp = np.linspace(15,25,100)
        bb = np.linspace(0.5, 2, 100)
        PP, BB = np.meshgrid(pp, bb)
-       Z = [[Expected_Revenue_Aggregated(PP[i][j], BB[i][j]) for i in range(0, len(PP))] for j in range(0, len(PP[0]))]
+       Z = [[Exp_rev_agg_plot(PP[i][j], BB[i][j]) for i in range(0, len(PP))] for j in range(0, len(PP[0]))]
        Z = np.array(Z).reshape(len(PP),len(PP))
        fig = plt.figure()
        ax = fig.add_subplot(111, projection='3d')

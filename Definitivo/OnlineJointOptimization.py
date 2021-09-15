@@ -11,18 +11,19 @@ from DataGenerativeFunctions import *
 # Import tools for handling Contextual Pricing
 from FeatureGenerator import *
 from CustomerDatabase import *
-from MC_Estimation_Stochastic_Aggregate_Distributions import *
 
 # Set ContextualPricing to True or False to control diversification in pricing phase.
 # Optimal Partitioning found at step 4 is considered
 
 ContextualPricing = False
 if ContextualPricing:
+    ndc_agg_opt = np.load('ndc_agg_opt.npy', allow_pickle=True)
+    cpc_agg_opt = np.load('cpc_agg_opt.npy',allow_pickle=True)
     def Revenue(b,priceC1, priceC2, priceC3_1,priceC3_2):
-        return ndc_a_MC(b)*(weights[0]*Cr_1(priceC1)*Mr(priceC1)*(1 + (1/30)*np.dot(np.array(C1['return probs'][0]),np.array(C1['return probs'][1]))) +
+        return ndc_agg_opt[bids.index(b)]*(weights[0]*Cr_1(priceC1)*Mr(priceC1)*(1 + (1/30)*np.dot(np.array(C1['return probs'][0]),np.array(C1['return probs'][1]))) +
                                weights[1]*Cr_2(priceC2)*Mr(priceC2)*(1 + (1/30)*np.dot(np.array(C2['return probs'][0]),np.array(C2['return probs'][1]))) +
                                0.5*weights[2]*Cr_3(priceC3_1)*Mr(priceC3_1)*(1 + (1/30)*np.dot(np.array(C3['return probs'][0]), np.array(C3['return probs'][1]))) +
-                               0.5*weights[2]*Cr_3(priceC3_2)*Mr(priceC3_2)*(1 + (1/30)*np.dot(np.array(C3['return probs'][0]),np.array(C3['return probs'][1])))) - ndc_a_MC(b)*cpc_a_MC(b)
+                               0.5*weights[2]*Cr_3(priceC3_2)*Mr(priceC3_2)*(1 + (1/30)*np.dot(np.array(C3['return probs'][0]),np.array(C3['return probs'][1])))) - ndc_agg_opt[bids.index(b)]*cpc_agg_opt[bids.index(b)]
     def Maximizer(b,prices1,prices2,prices3_1,prices3_2):
         grid = list(product(b,prices1, prices2, prices3_1, prices3_2))
         evals = [Revenue(item[1][0], item[1][1],item[1][2],item[1][3],item[1][4]) for item in enumerate(grid)]
@@ -141,7 +142,7 @@ plt.show()
 plt.figure(2)
 for el in jointBandit_revenue_per_experiment:
    plt.plot(el, 'b', alpha=0.1,label='_nolegend_')
-plt.plot(np.mean(jointBandit_revenue_per_experiment, axis=0), 'k',label='Mean Colllected Revenue')
+plt.plot(np.mean(jointBandit_revenue_per_experiment, axis=0), 'k',label='Mean Collected Revenue')
 plt.plot(np.repeat([solJoint[1]], T), 'g-',label='Optimale value')
 plt.ylim([0, 1000])
 plt.xlabel('t')

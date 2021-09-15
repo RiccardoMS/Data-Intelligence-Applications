@@ -22,12 +22,14 @@ from OnlinePricing import sol
 # each different feature subspace with a different price
 
 opt_bid = sol[0][1]
+ndc_agg_opt = np.load('ndc_agg_opt.npy', allow_pickle=True)
+cpc_agg_opt = np.load('cpc_agg_opt.npy', allow_pickle=True)
 
 def Revenue(b,priceC1, priceC2, priceC3_1,priceC3_2):
-    return ndc_a_MC(b)*(weights[0]*Cr_1(priceC1)*Mr(priceC1)*(1 + (1/30)*np.dot(np.array(C1['return probs'][0]),np.array(C1['return probs'][1]))) +
+    return ndc_agg_opt[bids.index(b)]*(weights[0]*Cr_1(priceC1)*Mr(priceC1)*(1 + (1/30)*np.dot(np.array(C1['return probs'][0]),np.array(C1['return probs'][1]))) +
                                weights[1]*Cr_2(priceC2)*Mr(priceC2)*(1 + (1/30)*np.dot(np.array(C2['return probs'][0]),np.array(C2['return probs'][1]))) +
                                0.5*weights[2]*Cr_3(priceC3_1)*Mr(priceC3_1)*(1 + (1/30)*np.dot(np.array(C3['return probs'][0]), np.array(C3['return probs'][1]))) +
-                               0.5*weights[2]*Cr_3(priceC3_2)*Mr(priceC3_2)*(1 + (1/30)*np.dot(np.array(C3['return probs'][0]),np.array(C3['return probs'][1])))) - ndc_a_MC(b)*cpc_a_MC(opt_bid)
+                               0.5*weights[2]*Cr_3(priceC3_2)*Mr(priceC3_2)*(1 + (1/30)*np.dot(np.array(C3['return probs'][0]),np.array(C3['return probs'][1])))) - ndc_agg_opt[bids.index(b)]*cpc_agg_opt[bids.index(b)]
 
 def Maximizer(prices1,prices2,prices3_1,prices3_2):
     grid = list(product(prices1, prices2, prices3_1, prices3_2))
@@ -51,8 +53,10 @@ T = 365
 n_experiments = 100
 
 # daily_rev
-opt_ndc = ndc_a_MC(opt_bid)
-opt_cpc = cpc_a_MC(opt_bid)
+#opt_ndc = ndc_a_MC(opt_bid)
+#opt_cpc = cpc_a_MC(opt_bid)
+opt_ndc = ndc_agg_opt[bids.index(opt_bid)]
+opt_cpc = cpc_agg_opt[bids.index(opt_bid)]
 def daily_rev(cr, pulled_arm, mean_ret,ndc = opt_ndc,cpc = opt_cpc):
      return ndc*cr*Mr(prices[pulled_arm])*(1 + (1/30)*mean_ret)-ndc*cpc
 
