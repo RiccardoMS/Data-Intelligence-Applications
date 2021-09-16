@@ -14,7 +14,7 @@ from OptimizationProblem import sol
 from OnlinePricing import opt_R
 
 ## Revenue Function Plots
-comparison = True
+comparison = False
 if comparison:
     actual_rev = lambda bid: ndc_a_MC(bid)*Cr_a(sol[0][0])*Mr(sol[0][0])*opt_R - ndc_a_MC(bid)*cpc_a_MC(bid)
     bb = np.linspace(min(bids),max(bids),1000)
@@ -140,7 +140,7 @@ if Training:
 gts_revenue_per_exp = np.load('GTSOnlineBidding_revenue.npy', allow_pickle=True)
 gpts_revenue_per_exp = np.load('GPTSOnlineBidding_revenue.npy', allow_pickle=True)
 gts_arms = np.load('GTSOnlineBidding_arms.npy', allow_pickle=True)
-gpts_arms = np.load('GTSOnlineBidding_arms.npy', allow_pickle=True) # GPTS
+gpts_arms = np.load('GPTSOnlineBidding_arms.npy', allow_pickle=True)
 
 # Plots
 plt.figure()

@@ -15,7 +15,7 @@ from CustomerDatabase import *
 # Set ContextualPricing to True or False to control diversification in pricing phase.
 # Optimal Partitioning found at step 4 is considered
 
-ContextualPricing = False
+ContextualPricing = True
 if ContextualPricing:
     ndc_agg_opt = np.load('ndc_agg_opt.npy', allow_pickle=True)
     cpc_agg_opt = np.load('cpc_agg_opt.npy',allow_pickle=True)
@@ -51,7 +51,7 @@ bid_values = bids
 T = 365
 
 # number of experiments
-n_experiments = 25
+n_experiments = 100
 
 # daily_rev
 def daily_rev(cr, pulled_price, mean_ret,ndc,cpc):
