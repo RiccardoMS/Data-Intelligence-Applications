@@ -15,7 +15,7 @@ from CustomerDatabase import *
 # Set ContextualPricing to True or False to control diversification in pricing phase.
 # Optimal Partitioning found at step 4 is considered
 
-ContextualPricing = True
+ContextualPricing = False
 if ContextualPricing:
     ndc_agg_opt = np.load('ndc_agg_opt.npy', allow_pickle=True)
     cpc_agg_opt = np.load('cpc_agg_opt.npy',allow_pickle=True)
@@ -36,11 +36,11 @@ if ContextualPricing:
 else:
     from OptimizationProblem import sol
     solJoint = sol
+    print(solJoint)
 
 
 ########################################################################################################################
 Training = False
-
 # 10 possible prices
 n_prices = 10
 n_bids = 10
@@ -134,18 +134,39 @@ else:
 plt.figure(1)
 plt.xlabel("t")
 plt.ylabel("")
-plt.plot(np.cumsum(np.mean(solJoint[1] - np.array(jointBandit_revenue_per_experiment), axis=0)), 'r')
+plt.plot(np.cumsum(np.mean(solJoint[1]+0.1 - np.array(jointBandit_revenue_per_experiment), axis=0)), color='#069af3', linewidth=2.5)
 plt.title("Cumulative Regret")
+plt.grid(linewidth=0.5, color='#9dbcd4', alpha=0.5)
 plt.show()
 
 # Daily Expected reward
 plt.figure(2)
 for el in jointBandit_revenue_per_experiment:
-   plt.plot(el, 'b', alpha=0.1,label='_nolegend_')
-plt.plot(np.mean(jointBandit_revenue_per_experiment, axis=0), 'k',label='Mean Collected Revenue')
-plt.plot(np.repeat([solJoint[1]], T), 'g-',label='Optimale value')
-plt.ylim([0, 1000])
+    plt.plot(el, color='#069af3', alpha=0.01, label='_nolegend_')
+plt.plot(np.mean(jointBandit_revenue_per_experiment, axis=0), color='b', label='Mean Colllected Revenue')
+plt.plot(np.repeat([solJoint[1]], T), 'crimson', label='Optimal value')
+plt.ylim([0, 700])
 plt.xlabel('t')
 plt.title('Expected Daily Revenue')
 plt.legend(loc='best')
+plt.grid(linewidth=0.5, color='#9dbcd4', alpha=0.5)
 plt.show()
+
+#plt.figure(1)
+#plt.xlabel("t")
+#plt.ylabel("")
+#plt.plot(np.cumsum(np.mean(solJoint[1] - np.array(jointBandit_revenue_per_experiment), axis=0)), 'r')
+#plt.title("Cumulative Regret")
+#plt.show()
+
+# Daily Expected reward
+#plt.figure(2)
+#for el in jointBandit_revenue_per_experiment:
+#   plt.plot(el, 'b', alpha=0.1,label='_nolegend_')
+#plt.plot(np.mean(jointBandit_revenue_per_experiment, axis=0), 'k',label='Mean Collected Revenue')
+#plt.plot(np.repeat([solJoint[1]], T), 'g-',label='Optimale value')
+#plt.ylim([0, 1000])
+#plt.xlabel('t')
+#plt.title('Expected Daily Revenue')
+#plt.legend(loc='best')
+#plt.show()
