@@ -235,71 +235,7 @@ ax2.set_yticklabels(['Naive', 'F1', 'F2', 'C11', 'C12', 'C21', 'C22', 'Disaggreg
 ax2.set_title('UCB1')
 plt.show()
 
-# Plot results
-#ts_revenue_per_experiment = np.load('TSContextualPricingResults_Revenue.npy', allow_pickle=True)
-#ucb1_revenue_per_experiment = np.load('UCB1ContextualPricingResults_Revenue.npy',allow_pickle=True)
-#ts_contexts_per_experiment = np.load('TSContextualPricingResults_Contexts.npy',allow_pickle=True)
-#ucb1_contexts_per_experiment = np.load('UCB1ContextualPricingResults_Contexts.npy',allow_pickle=True)
-# Cumulative regret
-#plt.figure(1)
-#plt.xlabel("t")
-#plt.ylabel("Regret")
-#plt.plot(np.cumsum(np.mean(solNew[1] - np.array(ts_revenue_per_experiment), axis=0)), 'r')
-#plt.plot(np.cumsum(np.mean(solNew[1] - np.array(ucb1_revenue_per_experiment), axis=0)), 'b')
-#plt.legend(["TS", "UCB1"])
-#plt.title("Cumulative Regret")
-#plt.show()
 
-# Daily Expected reward
-#fig, (ax1, ax2) = plt.subplots(1, 2)
-#for el in ucb1_revenue_per_experiment:
-#   ax1.plot(el, 'b', alpha=0.1,label='_nolegend_')
-#ax1.plot(np.mean(ucb1_revenue_per_experiment, axis=0), 'k',label='Mean Revenue')
-#ax1.plot(np.repeat([solNew[1]], T), 'g-',label='Optimale value')
-#ax1.plot(np.repeat([sol[1]], T), 'r-', label='Optimal Aggregate')
-#ax1.set_ylim([0, 1200])
-#ax1.set_xlabel('t')
-#ax1.set_ylabel('Expected Daily Revenue')
-#ax1.set_title('UCB1')
-#ax1.legend(loc='best')
-#for el in ts_revenue_per_experiment:
-#    ax2.plot(el, 'b', alpha=0.1, label='_nolegend_')
-#ax2.plot(np.mean(ts_revenue_per_experiment, axis=0), 'k',label='Mean Revenue')
-#ax2.plot(np.repeat([solNew[1]], T), 'g-',label='Optimal value')
-#ax2.plot(np.repeat([sol[1]], T), 'r-', label='Optimal Aggregate')
-#ax2.set_ylim([0, 1200])
-#ax2.set_xlabel('t')
-#ax2.set_ylabel('Expected Daily Revenue')
-#ax2.set_title('TS')
-#ax2.legend(loc='best')
-#plt.show()
-
-# Context History per experiment
-#d = dict({'Naive':0,'F1':1,'F2':2,'C11':3,'C12':4,'C21':5,'C22':6,'Disagg':7})
-#for i in range(0,len(ts_contexts_per_experiment)):
-#     for j in range(0, len(ts_contexts_per_experiment[i])):
-#         ts_contexts_per_experiment[i][j]=d[ts_contexts_per_experiment[i][j].getRuleName()]
-#for i in range(0,len(ucb1_contexts_per_experiment)):
-#     for j in range(0, len(ucb1_contexts_per_experiment[i])):
-#         ucb1_contexts_per_experiment[i][j]=d[ucb1_contexts_per_experiment[i][j].getRuleName()]
-#fig, (ax1, ax2) = plt.subplots(2, 1)
-#for el in ts_contexts_per_experiment:
-#     ax1.plot(el, 'b--', alpha=0.1, label='_nolegend_')
-#ax1.set_ylim([-0.5, 7.5])
-#ax1.set_xticks(range(52))
-#ax1.set_ylabel('')
-#ax1.set_yticks([0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0])
-#ax1.set_yticklabels(['Naive', 'F1', 'F2', 'C11', 'C12', 'C21', 'C22', 'Disaggregate'])
-#ax1.set_title('TS')
-#for el in ucb1_contexts_per_experiment:
-#     ax2.plot(el, 'b--', alpha=0.1, label='_nolegend_')
-#ax2.set_ylim([-0.5, 7.5])
-#ax2.set_xticks(range(52))
-#ax2.set_ylabel('')
-#ax2.set_yticks([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0])
-#ax2.set_yticklabels(['Naive', 'F1', 'F2', 'C11', 'C12', 'C21', 'C22', 'Disaggregate'])
-#ax2.set_title('UCB1')
-#plt.show()
 
 
 

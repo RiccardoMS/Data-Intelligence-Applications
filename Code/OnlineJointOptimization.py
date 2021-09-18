@@ -152,21 +152,3 @@ plt.legend(loc='best')
 plt.grid(linewidth=0.5, color='#9dbcd4', alpha=0.5)
 plt.show()
 
-#plt.figure(1)
-#plt.xlabel("t")
-#plt.ylabel("")
-#plt.plot(np.cumsum(np.mean(solJoint[1] - np.array(jointBandit_revenue_per_experiment), axis=0)), 'r')
-#plt.title("Cumulative Regret")
-#plt.show()
-
-# Daily Expected reward
-#plt.figure(2)
-#for el in jointBandit_revenue_per_experiment:
-#   plt.plot(el, 'b', alpha=0.1,label='_nolegend_')
-#plt.plot(np.mean(jointBandit_revenue_per_experiment, axis=0), 'k',label='Mean Collected Revenue')
-#plt.plot(np.repeat([solJoint[1]], T), 'g-',label='Optimale value')
-#plt.ylim([0, 1000])
-#plt.xlabel('t')
-#plt.title('Expected Daily Revenue')
-#plt.legend(loc='best')
-#plt.show()
