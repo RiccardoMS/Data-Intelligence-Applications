@@ -1,4 +1,4 @@
-# Project: Online Pricing & Advertising
+# Online Pricing & Advertising: a simulated case study
 
 carried out during the course of Data Intelligence Application, Polimi, A.Y. 2020/21.
 
